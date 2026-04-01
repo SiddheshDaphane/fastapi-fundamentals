@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { useState } from 'react'
 import './App.css'
 import { useFetch } from './custom-hooks/useFetch'
 import { usePrev } from './custom-hooks/usePrev';
 import { useReFetch } from './custom-hooks/useReFetch'
+import { useDebounce } from './custom-hooks/useDebounce'
 
 // function App() {
 //   const [currentPost, setCurrentPost] = useState(1)
@@ -29,21 +31,43 @@ import { useReFetch } from './custom-hooks/useReFetch'
 
 
 
-function App() {
-  const [count, setCount] = useState(0);
-  const prevCount = usePrev(count);
+// function App() {
+//   const [count, setCount] = useState(0);
+//   const prevCount = usePrev(count);
 
-  console.log("Current count:", count);
-  console.log("Prev count:", prevCount); 
+//   console.log("Current count:", count);
+//   console.log("Prev count:", prevCount); 
+
+//   return (
+//     <div>
+//       <h1>Counter with usePrev Hook</h1>
+//       <p>Current Count: {count}</p>
+//       <p>Previous Count: {prevCount}</p>
+//       <button onClick={() => {setCount(count + 1)}}>Increment</button>
+//       <button onClick={() => {setCount(count - 1)}}>Decrement</button>
+//     </div>
+//   )
+// }
+
+
+
+function App() {
+  const [value, setValue] = useState("");
+  const debounceValue = useDebounce(value);
+  
+  function change(e) {
+    setValue(e.target.value)
+  }
+
+  useEffect(() => {
+    console.log("expensive operation")
+  },[debounceValue])
 
   return (
     <div>
-      <h1>Counter with usePrev Hook</h1>
-      <p>Current Count: {count}</p>
-      <p>Previous Count: {prevCount}</p>
-      <button onClick={() => {setCount(count + 1)}}>Increment</button>
-      <button onClick={() => {setCount(count - 1)}}>Decrement</button>
+     <input type="text" onChange={change}></input>
     </div>
   )
 }
+
 export default App
