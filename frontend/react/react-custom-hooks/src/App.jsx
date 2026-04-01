@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import './App.css'
 import { useFetch } from './custom-hooks/useFetch'
+import { useReFetch } from './custom-hooks/useReFetch'
 
 function App() {
   const [currentPost, setCurrentPost] = useState(1)
-  const { data, load, error } = useFetch('https://jsonplaceholder.typicode.com/posts/'+currentPost)
+  const { data, loading, error } = useReFetch('https://jsonplaceholder.typicode.com/posts/'+currentPost, 10000)
 
-  if (load) {
+  if (loading) {
     return <div>
       Loading......
     </div>
